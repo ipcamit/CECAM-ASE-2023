@@ -1,0 +1,20 @@
+# Number of elements
+1
+Si
+
+# Preprocessing kind
+Descriptor
+
+# Cutoff distance
+3.0
+
+# Model
+model.pt
+
+# Returns Forces
+False
+# Number of inputs
+1
+
+# Any descriptors?
+SymmetryFunctions

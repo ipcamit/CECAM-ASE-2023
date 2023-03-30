@@ -1,5 +1,5 @@
 # 1. Initialize KIM Model
-kim init TorchMLModel2_Desc metal
+kim init SF__MO_000000000000_000 metal
 
 # 2. Load data and define atom type
 read_data test_si.data

@@ -1,0 +1,146 @@
+# Set base directory ------------------------------------------------------------
+mkdir MACH2023
+export MACH2023_PATH=$PWD/MACH2023
+cd MACH2023
+
+#  -------------- If no conda, install it ----------------------------------------
+# using micromamba to keep things localized
+mkdir $MACH2023_PATH/install_path
+export MACH_INSTALL_PATH=$MACH2023_PATH/install_path
+
+mkdir $MACH_INSTALL_PATH/bin $MACH_INSTALL_PATH/env
+
+# Manual install of micromamba
+# cd $MACH_INSTALL_PATH
+# Linux Intel (x86_64):
+# curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+# Pre 2020 macOS:
+# curl -Ls https://micro.mamba.pm/api/micromamba/osx-64/latest | tar -xvj bin/micromamba
+# Post 2020 macOS:
+# curl -Ls https://micro.mamba.pm/api/micromamba/osx-arm64/latest | tar -xvj bin/micromamba
+
+# export MAMBA_ROOT_PREFIX=$MACH_INSTALL_PATH/env  # optional, defaults to ~/micromamba
+# eval "$($MACH_INSTALL_PATH/bin/micromamba shell hook -s bash)"
+# export PATH="$MACH_INSTALL_PATH/bin:"$PATH
+
+# micromamba activate
+# alias conda=micromamba # for uniform use
+
+# -------------------------------------------------------------------------------
+
+# Install conda packages ---------------------------------------------------------
+# Try the following commands:
+# gcc --version
+# gfortran --version
+# g++ --version
+# python --version
+# make --version
+# cmake --version
+# git --version
+# pkg-config --version
+
+# If any of these fail, you need to install them
+# if gcc < 11.0.0, then preferably install the latest packages from conda
+# conda install cxx-compiler gfortran make cmake git python=3.10 pkg-config unzip -y -c conda-forge
+
+# Now base env is ready
+# -------------------------------------------------------------------------------
+
+# Install KIM API ---------------------------------------------------------------
+cd $MACH_INSTALL_PATH
+git clone https://github.com/openkim/kim-api
+cd kim-api && mkdir build && cd build
+export KIM_API_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
+export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
+cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
+make -j4 && make install
+# Try basic commands
+kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
+kim-api-collections-management list
+source kim-api-activate
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
+# -------------------------------------------------------------------------------
+
+# Install LAMMPS ----------------------------------------------------------------
+curl -Ls https://github.com/lammps/lammps/archive/refs/tags/stable_23Jun2022.tar.gz --output $MACH_INSTALL_PATH/lammps.tar.gz
+cd $MACH_INSTALL_PATH
+tar -xvf lammps.tar.gz
+cd lammps-stable_23Jun2022
+mkdir build && cd build
+cmake ../cmake -DCMAKE_BUILD_TYPE=Release \
+               -DBUILD_MPI=no -DBUILD_OMP=yes\
+               -DPKG_EXTRA-MOLECULE=on\
+               -DPKG_EXTRA-PAIR=on\
+               -DPKG_KIM=on -DDOWNLOAD_KIM=no\
+               -DPKG_KSPACE=on\
+               -DPKG_MANYBODY=on\
+               -DPKG_MEAM=on\
+               -DPKG_MISC=on\
+               -DPKG_MOLECULE=on\
+               -DPKG_QEQ=on\
+               -DPKG_MOLFILE=on\
+               -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
+make -j4 && make install
+
+# -------------------------------------------------------------------------------
+
+# Install Python things ------------------------------------------------------------
+# conda install pybind11 jupyterlab -y -c conda-forge
+
+# pytorch and pyg
+pip install torch==1.13.1+cpu torchvision==0.14.1+cpu torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
+pip install torch_geometric torch_scatter torch_sparse torch_cluster -f https://data.pyg.org/whl/torch-1.13.0+cpu.html
+
+# KLIFF dependencies
+pip install ase markupsafe==2.0.1    edn_format==0.7.5  kim-edn==1.3.1  kim-property==2.4.0  kim-query==3.0.0  simplejson==3.17.2  matplotlib==3.3.4  pymongo==3.11.3  montydb==2.1.1
+#  Jinja2==2.11.3 ? 
+pip install kimpy git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
+# -------------------------------------------------------------------------------
+
+# Install KLIFF -----------------------------------------------------------------
+# libdescriptor
+cd $MACH_INSTALL_PATH
+git clone -b vMACH2023 https://github.com/ipcamit/libdescriptor
+cd libdescriptor
+# Install python extensions
+pip install .
+# Install C++ library for LAMMPS
+mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
+make -j4 && make install
+
+# KLIFF
+cd $MACH_INSTALL_PATH
+git clone https://github.com/ipcamit/KLIFF
+cd KLIFF
+pip install -e .
+# -------------------------------------------------------------------------------
+
+# Model driver ----------------------------------------------------------------------
+cd $MACH_INSTALL_PATH
+# libtorch
+curl -Ls https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-1.13.0%2Bcpu.zip --output libtorch.zip
+unzip libtorch.zip
+cp -r libtorch/lib/* $MACH_INSTALL_PATH/lib
+cp -r libtorch/include/* $MACH_INSTALL_PATH/include
+cp -r libtorch/share/* $MACH_INSTALL_PATH/share
+
+git clone -b vMACH2023 https://github.com/ipcamit/colabfit-model-driver
+export KIM_MODEL_DISABLE_GRAPH=1
+export LIBDESCRIPTOR_ROOT=$MACH_INSTALL_PATH
+kim-api-collections-management install system colabfit-model-driver
+# -------------------------------------------------------------------------------
+
+# get tutorial data --------------------------------------------------------------
+cd $MACH2023_PATH
+git clone https://github.com/ipcamit/MACH2023
+cd MACH2023
+kim-api-collections-management install system SF__MO_000000000000_000
+# -------------------------------------------------------------------------------
+
+# Clean up -----------------------------------------------------------------------
+cd $MACH_INSTALL_PATH
+rm -rf kim-api lammps-stable_23Jun2022 lammps.tar.gz libtorch libtorch.zip colabfit-portable-models
+# -------------------------------------------------------------------------------
+
+

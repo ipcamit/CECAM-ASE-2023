@@ -9,7 +9,7 @@ XYZ_FILE_PATH = "test_si.xyz"
 atoms = ase.io.read(XYZ_FILE_PATH, format="extxyz")
 
 # 3. Select the model and create the calculator
-model_name = "TorchMLModel2_Desc"
+model_name = "SF__MO_000000000000_000"
 calc = KIM(model_name, options={"ase_neigh": False})
 # calc = KIM(model_name, options={"ase_neigh": False, "neigh_skin_ratio": 0.0})
 
