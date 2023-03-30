@@ -1,34 +1,19 @@
-# Set base directory ------------------------------------------------------------
-mkdir MACH2023
-export MACH2023_PATH=$PWD/MACH2023
-cd MACH2023
+#!/bin/bash
+set -e
+# Fresh env
+# Prerequisites: bzip2, curl (for now)
 
-#  -------------- If no conda, install it ----------------------------------------
-# using micromamba to keep things localized
-mkdir $MACH2023_PATH/install_path
+# 1. Set base directory ------------------------------------------------------------
+echo "Setting base directories..."
+export BASE_DIR=$PWD
+export MACH2023_PATH=$PWD/MACH2023
 export MACH_INSTALL_PATH=$MACH2023_PATH/install_path
 
-mkdir $MACH_INSTALL_PATH/bin $MACH_INSTALL_PATH/env
+mkdir $MACH2023_PATH $MACH_INSTALL_PATH $MACH_INSTALL_PATH/bin
 
-# Manual install of micromamba
-# cd $MACH_INSTALL_PATH
-# Linux Intel (x86_64):
-# curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
-# Pre 2020 macOS:
-# curl -Ls https://micro.mamba.pm/api/micromamba/osx-64/latest | tar -xvj bin/micromamba
-# Post 2020 macOS:
-# curl -Ls https://micro.mamba.pm/api/micromamba/osx-arm64/latest | tar -xvj bin/micromamba
+export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 
-# export MAMBA_ROOT_PREFIX=$MACH_INSTALL_PATH/env  # optional, defaults to ~/micromamba
-# eval "$($MACH_INSTALL_PATH/bin/micromamba shell hook -s bash)"
-# export PATH="$MACH_INSTALL_PATH/bin:"$PATH
-
-# micromamba activate
-# alias conda=micromamba # for uniform use
-
-# -------------------------------------------------------------------------------
-
-# Install conda packages ---------------------------------------------------------
+# 3. Install conda packages ----------------------------------------------------------
 # Try the following commands:
 # gcc --version
 # gfortran --version
@@ -41,12 +26,14 @@ mkdir $MACH_INSTALL_PATH/bin $MACH_INSTALL_PATH/env
 
 # If any of these fail, you need to install them
 # if gcc < 11.0.0, then preferably install the latest packages from conda
-# conda install cxx-compiler gfortran make cmake git python=3.10 pkg-config unzip -y -c conda-forge
+echo "Installing conda packages..."
+conda install cxx-compiler gfortran make cmake git python=3.10 pkg-config unzip pybind11 jupyterlab -y -c conda-forge
 
 # Now base env is ready
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
 
-# Install KIM API ---------------------------------------------------------------
+# 4. Install KIM API -----------------------------------------------------------------
+echo "Installing KIM API..."
 cd $MACH_INSTALL_PATH
 git clone https://github.com/openkim/kim-api
 cd kim-api && mkdir build && cd build
@@ -56,12 +43,12 @@ cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -D
 make -j4 && make install
 # Try basic commands
 kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
-kim-api-collections-management list
 source kim-api-activate
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
 
-# Install LAMMPS ----------------------------------------------------------------
+# 5. Install LAMMPS ------------------------------------------------------------------
+echo "Installing LAMMPS..."
 curl -Ls https://github.com/lammps/lammps/archive/refs/tags/stable_23Jun2022.tar.gz --output $MACH_INSTALL_PATH/lammps.tar.gz
 cd $MACH_INSTALL_PATH
 tar -xvf lammps.tar.gz
@@ -82,30 +69,31 @@ cmake ../cmake -DCMAKE_BUILD_TYPE=Release \
                -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
 make -j4 && make install
 
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
 
-# Install Python things ------------------------------------------------------------
-# conda install pybind11 jupyterlab -y -c conda-forge
-
+# 6. Install Python things -----------------------------------------------------------
+echo "Installing Python packages..."
 # pytorch and pyg
 pip install torch==1.13.1+cpu torchvision==0.14.1+cpu torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
 pip install torch_geometric torch_scatter torch_sparse torch_cluster -f https://data.pyg.org/whl/torch-1.13.0+cpu.html
 
 # KLIFF dependencies
-pip install ase markupsafe==2.0.1    edn_format==0.7.5  kim-edn==1.3.1  kim-property==2.4.0  kim-query==3.0.0  simplejson==3.17.2  matplotlib==3.3.4  pymongo==3.11.3  montydb==2.1.1
+pip install ase markupsafe==2.0.1 edn_format==0.7.5 kim-edn==1.3.1 kim-property==2.4.0 kim-query==3.0.0 simplejson==3.17.2 matplotlib==3.3.4 pymongo==3.11.3 montydb==2.1.1
 #  Jinja2==2.11.3 ? 
 pip install kimpy git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
-# -------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------
 
-# Install KLIFF -----------------------------------------------------------------
+# 7. Install KLIFF -------------------------------------------------------------------
+echo "Installing KLIFF..."
 # libdescriptor
 cd $MACH_INSTALL_PATH
-git clone -b vMACH2023 https://github.com/ipcamit/libdescriptor
+git clone https://github.com/ipcamit/libdescriptor
 cd libdescriptor
+git checkout 318f4dc95d2
 # Install python extensions
 pip install .
 # Install C++ library for LAMMPS
-mkdir build && cd build
+rm -rf build && mkdir build && cd build
 cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
 make -j4 && make install
 
@@ -125,7 +113,8 @@ cp -r libtorch/lib/* $MACH_INSTALL_PATH/lib
 cp -r libtorch/include/* $MACH_INSTALL_PATH/include
 cp -r libtorch/share/* $MACH_INSTALL_PATH/share
 
-git clone -b vMACH2023 https://github.com/ipcamit/colabfit-model-driver
+git clone https://github.com/ipcamit/colabfit-model-driver
+cd colabfit-model-driver && git checkout f22bb39c7f9 && cd ..
 export KIM_MODEL_DISABLE_GRAPH=1
 export LIBDESCRIPTOR_ROOT=$MACH_INSTALL_PATH
 kim-api-collections-management install system colabfit-model-driver
@@ -139,8 +128,11 @@ kim-api-collections-management install system SF__MO_000000000000_000
 # -------------------------------------------------------------------------------
 
 # Clean up -----------------------------------------------------------------------
+echo "Cleaning up..."
 cd $MACH_INSTALL_PATH
 rm -rf kim-api lammps-stable_23Jun2022 lammps.tar.gz libtorch libtorch.zip colabfit-portable-models
 # -------------------------------------------------------------------------------
 
-
+# Done! --------------------------------------------------------------------------
+cd $MACH2023_PATH/MACH2023
+echo "Done!"

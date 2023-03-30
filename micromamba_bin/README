@@ -1,0 +1,2 @@
+Keeping the linux micromamba binary here for ease of use.
+30/03/2023: curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest 
