@@ -15,10 +15,10 @@ export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 
 # 3. Install conda packages ----------------------------------------------------------
 # if gcc < 11.0.0, then preferably install the latest packages from conda
-echo "Installing conda packages..."
-conda install cxx-compiler gfortran make cmake git -y -c conda-forge
-conda install python=3.10 -y -c conda-forge
-conda install pkg-config unzip pybind11 -y -c conda-forge
+#echo "Installing conda packages..."
+#conda install cxx-compiler gfortran make cmake git -y -c conda-forge
+#conda install python=3.10 -y -c conda-forge
+#conda install pkg-config unzip pybind11 -y -c conda-forge
 
 # Now base env is ready
 # ------------------------------------------------------------------------------------
