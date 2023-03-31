@@ -6,3 +6,4 @@ dependencies:
   - cmake
   - gfortran
   - pybind11-global
+  - libgfortran5
