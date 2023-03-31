@@ -1,3 +1,4 @@
+set -e
 # 1. Set base directory ------------------------------------------------------------
 echo "Setting base directories..."
 export BASE_DIR=$PWD
@@ -17,11 +18,13 @@ export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
 cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
 make -j4 && make install
 # Try basic commands
-kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
+#kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
 source kim-api-activate
+kim-api-collections-management list
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
 # ------------------------------------------------------------------------------------
-
+echo $LD_LIBRARY_PATH
+echo "Installing MACH..."
 pip install kimpy git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
 # ----------------------------------------------------------------------------------
 
