@@ -4,6 +4,7 @@ channels:
 dependencies:
   - cxx-compiler
   - cmake
+  - gfortran
   - gfortran_linux-64
   - pybind11-global
   - libgfortran-ng
