@@ -2,8 +2,5 @@ build-essential
 cmake
 pkg-config
 unzip
-gfortran
-libblas-dev
-liblapack-dev
 python-pybind11
 doxygen
