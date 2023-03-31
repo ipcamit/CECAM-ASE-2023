@@ -15,7 +15,7 @@ cd $MACH_INSTALL_PATH
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
 export MAMBA_ROOT_PREFIX=$MACH_INSTALL_PATH/env  # optional, defaults to ~/micromamba
-eval "$($MACH_INSTALL_PATH/bin/micromamba shell hook -s bash)"
+eval "$($MACH_INSTALL_PATH/bin/micromamba shell hook -s sh)"
 
 micromamba activate
 
