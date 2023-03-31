@@ -1,5 +1,7 @@
 set -e
-conda install cmake -c conda-forge
+conda create -n build
+conda activate build
+conda install cmake cxx-compilers gfortran -c conda-forge
 # 1. Set base directory ------------------------------------------------------------
 echo "Setting base directories..."
 export BASE_DIR=$PWD
