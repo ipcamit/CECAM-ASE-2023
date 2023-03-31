@@ -5,4 +5,3 @@ dependencies:
   - cxx-compiler
   - cmake
   - pybind11-global
-  - fortran-compiler
