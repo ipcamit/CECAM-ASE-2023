@@ -2,6 +2,6 @@ name: base
 channels:
   - conda-forge
 dependencies:
-  - cxx-compilers
+  - cxx-compiler
   - cmake
   - gfortran
