@@ -8,6 +8,20 @@ mkdir $MACH2023_PATH $MACH_INSTALL_PATH $MACH_INSTALL_PATH/bin
 
 export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 
+echo "Installing KLIFF..."
+# libdescriptor
+cd $MACH_INSTALL_PATH
+git clone https://github.com/ipcamit/libdescriptor
+cd libdescriptor
+git checkout 318f4dc95d2
+# Install python extensions
+pip install .
+# Install C++ library for LAMMPS
+rm -rf build && mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
+make -j4 && make install
+
+
 # 4. Install KIM API -----------------------------------------------------------------
 echo "Installing KIM API..."
 git clone https://github.com/openkim/kim-api
@@ -38,19 +52,6 @@ pip install ase markupsafe==2.0.1 edn_format==0.7.5 kim-edn==1.3.1 kim-property=
 
 
 # 7. Install KLIFF -------------------------------------------------------------------
-echo "Installing KLIFF..."
-# libdescriptor
-cd $MACH_INSTALL_PATH
-git clone https://github.com/ipcamit/libdescriptor
-cd libdescriptor
-git checkout 318f4dc95d2
-# Install python extensions
-pip install .
-# Install C++ library for LAMMPS
-rm -rf build && mkdir build && cd build
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
-make -j4 && make install
-
 # KLIFF
 cd $MACH_INSTALL_PATH
 git clone https://github.com/ipcamit/KLIFF
