@@ -8,6 +8,7 @@ mkdir $MACH2023_PATH $MACH_INSTALL_PATH $MACH_INSTALL_PATH/bin
 
 export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 
+pip install kimpy git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
 # ----------------------------------------------------------------------------------
 
 pip install torch==1.13.1+cpu torchvision==0.14.1+cpu torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
@@ -19,18 +20,17 @@ pip install ase markupsafe==2.0.1 edn_format==0.7.5 kim-edn==1.3.1 kim-property=
 
 
 # 4. Install KIM API -----------------------------------------------------------------
-echo "Installing KIM API..."
-git clone https://github.com/openkim/kim-api
-cd kim-api && mkdir build && cd build
-export KIM_API_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
-export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
-cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
-make -j4 && make install
-# Try basic commands
-kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
-source kim-api-activate
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
+#echo "Installing KIM API..."
+#git clone https://github.com/openkim/kim-api
+#cd kim-api && mkdir build && cd build
+#export KIM_API_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
+#export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
+#cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
+#make -j4 && make install
+## Try basic commands
+#kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
+#source kim-api-activate
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
 ## ------------------------------------------------------------------------------------
 
-pip install kimpy git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
 #
