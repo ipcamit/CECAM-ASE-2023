@@ -7,4 +7,3 @@ doxygen
 gfortran
 libblas-dev
 liblapack-dev
-libgfortran
