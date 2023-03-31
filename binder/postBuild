@@ -11,6 +11,7 @@ mkdir $MACH2023_PATH $MACH_INSTALL_PATH $MACH_INSTALL_PATH/bin
 export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 
 # install mamba
+cd $MACH_INSTALL_PATH
 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 
 export MAMBA_ROOT_PREFIX=$MACH_INSTALL_PATH/env  # optional, defaults to ~/micromamba
