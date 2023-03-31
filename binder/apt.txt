@@ -5,3 +5,6 @@ unzip
 python-pybind11
 doxygen
 gfortran
+libblas-dev
+liblapack-dev
+libgfortran
