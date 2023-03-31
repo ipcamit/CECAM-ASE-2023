@@ -37,7 +37,7 @@ git checkout 318f4dc95d2
 pip install .
 # Install C++ library for LAMMPS
 rm -rf build && mkdir build && cd build
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH -DCMAKE_CXX_FLAGS="-std=c++17"
 make -j4 && make install
 
 
