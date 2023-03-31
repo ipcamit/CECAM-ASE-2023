@@ -6,4 +6,3 @@ gfortran
 libblas-dev
 liblapack-dev
 python-pybind11
-libkim-api-dev
