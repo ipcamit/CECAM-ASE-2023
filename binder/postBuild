@@ -10,21 +10,6 @@ mkdir $MACH2023_PATH $MACH_INSTALL_PATH $MACH_INSTALL_PATH/bin
 
 export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 
-
-echo "Installing KLIFF..."
-# libdescriptor
-cd $MACH_INSTALL_PATH
-git clone https://github.com/ipcamit/libdescriptor
-cd libdescriptor
-git checkout 318f4dc95d2
-# Install python extensions
-pip install .
-# Install C++ library for LAMMPS
-rm -rf build && mkdir build && cd build
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
-make -j4 && make install
-
-
 # 4. Install KIM API -----------------------------------------------------------------
 echo "Installing KIM API..."
 git clone https://github.com/openkim/kim-api
@@ -40,7 +25,22 @@ export PKG_CONFIG_PATH=$MACH_INSTALL_PATH/lib/pkgconfig:$PKG_CONFIG_PATH
 echo "KIM API activated."
 kim-api-collections-management list
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
+
 # ------------------------------------------------------------------------------------
+echo "Installing KLIFF..."
+# libdescriptor
+cd $MACH_INSTALL_PATH
+git clone https://github.com/ipcamit/libdescriptor
+cd libdescriptor
+git checkout 318f4dc95d2
+# Install python extensions
+pip install .
+# Install C++ library for LAMMPS
+rm -rf build && mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
+make -j4 && make install
+
+
 echo $LD_LIBRARY_PATH
 echo "Installing MACH..."
 pip install kimpy git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
