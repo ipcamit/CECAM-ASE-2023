@@ -1,4 +1,6 @@
 set -e
+
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
 conda create -n build
 conda activate build
 conda install cmake cxx-compilers gfortran -c conda-forge
@@ -11,6 +13,16 @@ export MACH_INSTALL_PATH=$MACH2023_PATH/install_path
 mkdir $MACH2023_PATH $MACH_INSTALL_PATH $MACH_INSTALL_PATH/bin
 
 export PATH="$MACH_INSTALL_PATH/bin:"$PATH
+
+# install mamba
+curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+
+export MAMBA_ROOT_PREFIX=$MACH_INSTALL_PATH/env  # optional, defaults to ~/micromamba
+eval "$($MACH_INSTALL_PATH/bin/micromamba shell hook -s bash)"
+
+micromamba activate
+
+micromamba install cxx-compiler gfortran cmake -y -c conda-forge
 
 echo "Installing KLIFF..."
 # libdescriptor
