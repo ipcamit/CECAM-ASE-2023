@@ -26,39 +26,39 @@ export PATH="$MACH_INSTALL_PATH/bin:"$PATH
 # 4. Install KIM API -----------------------------------------------------------------
 echo "Installing KIM API..."
 cd $MACH_INSTALL_PATH
-git clone https://github.com/openkim/kim-api
-cd kim-api && mkdir build && cd build
-export KIM_API_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
-export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
-cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
-make -j4 && make install
-# Try basic commands
-kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
-source kim-api-activate
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
-# ------------------------------------------------------------------------------------
-
-# 5. Install LAMMPS ------------------------------------------------------------------
-echo "Installing LAMMPS..."
-curl -Ls https://github.com/lammps/lammps/archive/refs/tags/stable_23Jun2022.tar.gz --output $MACH_INSTALL_PATH/lammps.tar.gz
-cd $MACH_INSTALL_PATH
-tar -xvf lammps.tar.gz
-cd lammps-stable_23Jun2022
-mkdir build && cd build
-cmake ../cmake -DCMAKE_BUILD_TYPE=Release \
-               -DBUILD_MPI=no -DBUILD_OMP=yes\
-               -DPKG_EXTRA-MOLECULE=on\
-               -DPKG_EXTRA-PAIR=on\
-               -DPKG_KIM=on -DDOWNLOAD_KIM=no\
-               -DPKG_KSPACE=on\
-               -DPKG_MANYBODY=on\
-               -DPKG_MEAM=on\
-               -DPKG_MISC=on\
-               -DPKG_MOLECULE=on\
-               -DPKG_QEQ=on\
-               -DPKG_MOLFILE=on\
-               -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
-make -j4 && make install
+#git clone https://github.com/openkim/kim-api
+#cd kim-api && mkdir build && cd build
+#export KIM_API_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
+#export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
+#cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
+#make -j4 && make install
+## Try basic commands
+#kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
+#source kim-api-activate
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
+## ------------------------------------------------------------------------------------
+#
+## 5. Install LAMMPS ------------------------------------------------------------------
+#echo "Installing LAMMPS..."
+#curl -Ls https://github.com/lammps/lammps/archive/refs/tags/stable_23Jun2022.tar.gz --output $MACH_INSTALL_PATH/lammps.tar.gz
+#cd $MACH_INSTALL_PATH
+#tar -xvf lammps.tar.gz
+#cd lammps-stable_23Jun2022
+#mkdir build && cd build
+#cmake ../cmake -DCMAKE_BUILD_TYPE=Release \
+#               -DBUILD_MPI=no -DBUILD_OMP=yes\
+#               -DPKG_EXTRA-MOLECULE=on\
+#               -DPKG_EXTRA-PAIR=on\
+#               -DPKG_KIM=on -DDOWNLOAD_KIM=no\
+#               -DPKG_KSPACE=on\
+#               -DPKG_MANYBODY=on\
+#               -DPKG_MEAM=on\
+#               -DPKG_MISC=on\
+#               -DPKG_MOLECULE=on\
+#               -DPKG_QEQ=on\
+#               -DPKG_MOLFILE=on\
+#               -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH
+#make -j4 && make install
 
 # ------------------------------------------------------------------------------------
 
