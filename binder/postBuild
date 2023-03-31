@@ -19,7 +19,7 @@ make -j4 && make install
 # Try basic commands
 #kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
 echo "KIM API installed."
-.  $MACH_INSTALL_PATH/bin/kim-api-activate
+export PKG_CONFIG_PATH=$MACH_INSTALL_PATH/lib/pkgconfig:$PKG_CONFIG_PATH
 echo "KIM API activated."
 kim-api-collections-management list
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$MACH_INSTALL_PATH/lib
