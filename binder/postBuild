@@ -17,7 +17,7 @@ cd kim-api && mkdir build && cd build
 export KIM_API_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
 export KIM_API_USER_CONFIGURATION_FILE=$MACH_INSTALL_PATH/kim-config
 CC=/usr/bin/gcc CXX=/usr/bin/g++ FC=/usr/bin/gfortran cmake -DCMAKE_INSTALL_PREFIX=$MACH_INSTALL_PATH .. -DCMAKE_BUILD_TYPE=Release -DKIM_API_USER_CONFIGURATION_FILE=$KIM_API_USER_CONFIGURATION_FILE
-make -j4 && make install
+make && make install
 # Try basic commands
 #kim-api-collections-management install system SW_StillingerWeber_1985_Si__MO_405512056662_006
 echo "KIM API installed."
