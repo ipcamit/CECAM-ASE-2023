@@ -1,0 +1,5 @@
+build-essentials
+cmake
+pkg-config
+unzip
+
