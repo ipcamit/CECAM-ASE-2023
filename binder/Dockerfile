@@ -17,6 +17,7 @@ RUN cp -r libtorch/include/* /usr/local/include \
 RUN pip install torch==1.13.1+cpu torchvision==0.14.1+cpu torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
 RUN pip install torch_geometric torch_scatter torch_sparse torch_cluster -f https://data.pyg.org/whl/torch-1.13.0+cpu.html
 RUN pip install git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cdb7d8734afdbbb4a570a92a94#egg=colabfit_tools
+RUN pip install --no-cache-dir notebook jupyterlab
 
 # install libdescriptor
 WORKDIR /opt

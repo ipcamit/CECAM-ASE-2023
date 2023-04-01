@@ -1,4 +1,9 @@
 #!/bin/bash
+# Literate programming can't get here fast enough... So I'm just going document this script
+# using the comments. This is a work in progress, but it should work for now.
+# This script is meant to be run on a fresh Ubuntu 20.04 install. And probably MacOS, but who knows.
+
+# `set -e` will exit the script if any command fails, just some insurance.
 set -e
 # Fresh env
 # Prerequisites: bzip2, curl (for now)
