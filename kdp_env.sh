@@ -35,9 +35,8 @@ sudo pip install git+https://github.com/colabfit/colabfit-tools@aa2d1e3b160275cd
 echo "Installing KLIFF..."
 # libdescriptor
 cd $MACH_INSTALL_PATH
-git clone https://github.com/ipcamit/libdescriptor
+git clone -b MACH2023 https://github.com/ipcamit/libdescriptor
 cd libdescriptor
-git checkout 318f4dc95d2
 # Install python extensions
 sudo pip install .
 # Install C++ library for LAMMPS
@@ -61,8 +60,8 @@ sudo cp -r libtorch/lib/* /usr/local/lib
 sudo cp -r libtorch/include/* /usr/local/include
 sudo cp -r libtorch/share/* /usr/local/share
 
-git clone https://github.com/ipcamit/colabfit-model-driver
-cd colabfit-model-driver && git checkout f22bb39c7f9 && cd ..
+git clone -b MACH2023 https://github.com/ipcamit/colabfit-model-driver
+cd colabfit-model-driver && cd ..
 export KIM_MODEL_DISABLE_GRAPH=1
 kim-api-collections-management install user colabfit-model-driver
 # -------------------------------------------------------------------------------

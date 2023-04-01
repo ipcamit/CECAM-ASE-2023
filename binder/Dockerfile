@@ -21,9 +21,8 @@ RUN pip install --no-cache-dir notebook jupyterlab
 
 # install libdescriptor
 WORKDIR /opt
-RUN git clone https://github.com/ipcamit/libdescriptor \ 
+RUN git clone -b MACH2023 https://github.com/ipcamit/libdescriptor \ 
  && cd libdescriptor \
- && git checkout 318f4dc95d2 \ 
  && pip install .
 # Install C++ library for LAMMPS
 RUN cd /opt/libdescriptor \ 
@@ -32,8 +31,8 @@ RUN cd /opt/libdescriptor \
 
 # install Model driver
 WORKDIR /opt
-RUN git clone https://github.com/ipcamit/colabfit-model-driver \
- && cd colabfit-model-driver && git checkout f22bb39c7f9 && cd ..
+RUN git clone -b MACH2023 https://github.com/ipcamit/colabfit-model-driver \
+ && cd colabfit-model-driver && cd ..
 ENV KIM_MODEL_DISABLE_GRAPH=1
 RUN kim-api-collections-management install system colabfit-model-driver
 # Switch back to openkim env
