@@ -60,7 +60,7 @@ if [ "$OS" = "linux" ]; then
 elif [ "$OS" = "mac_arm64" ]; then
     echo "WARNING: LIBTORCH IS NOT SUPPORTED ON ARM64 MACS"
     echo "So, you will not be able to run the examples on LAMMPS"
-    echo "See:
+    echo "See:"
     echo "https://github.com/pytorch/pytorch/issues/63558#issuecomment-1066916150"
     curl -Ls https://micro.mamba.pm/api/micromamba/osx-arm64/latest | tar -xvj bin/micromamba
 # if mac_intel:
@@ -104,7 +104,6 @@ These packages might be already installed in your system, but it is better to
 # If any of these fail, you need to install them
 # if gcc < 11.0.0, then preferably install the latest packages from conda
 echo "Installing conda packages..."
-sleep 3
 micromamba install cxx-compiler gfortran make cmake git python=3.10 pkg-config unzip pybind11 jupyterlab -y -c conda-forge
 ```
 Now base env is ready.
@@ -184,10 +183,9 @@ echo "Installing KLIFF..."
 
 # libdescriptor
 cd $MACH_INSTALL_PATH
-git clone https://github.com/ipcamit/libdescriptor
+git clone -b MACH2023 https://github.com/ipcamit/libdescriptor
 
 cd libdescriptor
-git checkout 318f4dc95d2
 # Install python extensions
 pip install .
 
@@ -222,8 +220,8 @@ cp -r libtorch/lib/* $MACH_INSTALL_PATH/lib
 cp -r libtorch/include/* $MACH_INSTALL_PATH/include
 cp -r libtorch/share/* $MACH_INSTALL_PATH/share
 
-git clone https://github.com/ipcamit/colabfit-model-driver
-cd colabfit-model-driver && git checkout f22bb39c7f9 && cd ..
+git clone -b MACH2023 https://github.com/ipcamit/colabfit-model-driver
+cd colabfit-model-driver && cd ..
 
 export KIM_MODEL_DISABLE_GRAPH=1
 export LIBDESCRIPTOR_ROOT=$MACH_INSTALL_PATH
