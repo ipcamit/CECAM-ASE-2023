@@ -1,9 +1,0 @@
-build-essential
-cmake
-pkg-config
-unzip
-python-pybind11
-doxygen
-gfortran
-libblas-dev
-liblapack-dev

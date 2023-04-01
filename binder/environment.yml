@@ -1,7 +1,0 @@
-name: base
-channels:
-  - conda-forge
-dependencies:
-  - cmake
-  - pybind11-global
-  - cxx-compiler
