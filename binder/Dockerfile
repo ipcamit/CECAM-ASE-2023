@@ -42,7 +42,7 @@ RUN git clone -b MACH2023 https://github.com/ipcamit/colabfit-model-driver \
 # install kliff
 WORKDIR /opt
 RUN git clone https://github.com/ipcamit/kliff \
- && cd kliff
+ && cd kliff \
  && pip install . \
  && cd .. && rm -rf kliff
  
