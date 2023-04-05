@@ -39,6 +39,10 @@ RUN git clone -b MACH2023 https://github.com/ipcamit/colabfit-model-driver \
  && rm -rf colabfit-model-driver
 # Switch back to openkim env
 
+# install kliff
+RUN pip install git+https://github.com/ipcamit/kliff.git
+
+
 WORKDIR /home/openkim
 USER openkim
 
