@@ -45,3 +45,7 @@ USER openkim
 RUN git clone https://github.com/ipcamit/MACH2023 \
  && cd MACH2023 \
  && kim-api-collections-management install user SF__MO_000000000000_000
+
+ENV SHELL=/bin/bash
+ENV LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
