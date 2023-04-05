@@ -1,0 +1,29 @@
+{"contributor-id" "ffffffff-ffff-ffff-ffff-ffffffffffff"
+ "description" "Testing Self ML model"
+ "developer" ["ffffffff-ffff-ffff-ffff-ffffffffffff"]
+ "doi" "10.123450/ffffff"
+ "domain" "openkim.org"
+ "extended-id" "Dummy_Model_2023_SF__MO_000000000000_000"
+ "implementer" ["ffffffff-ffff-ffff-ffff-ffffffffffff"]
+ "kim-api-version" "2.3"
+ "maintainer-id" "ffffffff-ffff-ffff-ffff-ffffffffffff"
+ "model-driver" "TorchMLMD__MD_000000000000_000"
+ "potential-type" "mlip"
+ "publication-year" "2023"
+ "source-citations" [{"author" "Me"
+                      "doi" "10.123450/ffffff"
+                      "issue" "00"
+                      "journal" "Journal of Testing"
+                      "month" "Apr"
+                      "pages" "000-000"
+                      "publisher" "Testing"
+                      "recordkey" "MO_000000000000_000"
+                      "recordprimary" "recordprimary"
+                      "recordtype" "article"
+                      "title" "New model to bring world peace and solve all problems"
+                      "url" "https://www.testing.com"
+                      "volume" "00"
+                      "year" "2023"}]
+ "species" ["Si"]
+ "title" "Simple descriptor model for Si"
+ }
