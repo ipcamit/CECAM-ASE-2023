@@ -1,0 +1,44 @@
+openkim@b17e5aed1e11:~/MACH2023$ pipeline-run-pair -v ForcesNumerDeriv__VC_710586816390_003 SF__MO_000000000000_000
++ Running pair (ForcesNumerDeriv__VC_710586816390_003, SF__MO_000000000000_000)
+
+Cannot build driver TorchMLMD__MD_000000000000_000 of SF__MO_000000000000_000. Skipping build of driver and continuing with build of item...
+
+Model Extended KIM ID = 
+=== Verification check vc-forces-numerical-derivative start (2023-04-06 15:35:53) ===
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!                                                      !!!!!
+!!!!!  VERIFICATION CHECK: vc-forces-numerical-derivative  !!!!!
+!!!!!                                                      !!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Description: Comparison of the analytical forces obtained from the model with
+             forces computed by numerical differentiation using Richardson
+             extrapolation for a randomly distorted non-periodic structure based
+             off the equilibrium face-centered cubic (fcc) structure. Separate
+             configurations are tested for each species supported by the model,
+             as well as one containing a random distribution of all species.
+             Configurations used for testing are provided as auxiliary files.
+
+Author: Ellad Tadmor
+
+-----------------------------------------------------------------------------------------------------
+Results for KIM Model      : SF__MO_000000000000_000
+Supported species          : Si
+
+random seed                = 13
+perturbation amplitude     = 0.250
+number unit cells per side = 2
+-----------------------------------------------------------------------------------------------------
+
+
+ERROR: Unable to perform verification check.
+
+ Message = ERROR: Unable to scale configuration down to nonzero forces.
+
+=== Verification check vc-forces-numerical-derivative end (2023-04-06 15:52:59) ===
+{"usertime":1028.69,"memmax":210008,"memavg":0}
+
+  Pair produced Verification Result VC_710586816390_003-and-MO_000000000000_000-1680795353-vr in 1025.9349319934845 seconds
+

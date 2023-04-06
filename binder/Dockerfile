@@ -47,7 +47,13 @@ RUN git clone https://github.com/ipcamit/kliff \
  && cd kliff \
  && pip install . \
  && cd .. && rm -rf kliff
- 
+
+WORKDIR /opt
+RUN pip uninstall -y libdescriptor
+RUN git clone -b MACH2023 https://github.com/ipcamit/libdescriptor \ 
+ && cd libdescriptor \
+ && pip install .
+#
 
 WORKDIR /home/openkim
 USER openkim
@@ -55,6 +61,13 @@ USER openkim
 RUN git clone https://github.com/ipcamit/MACH2023 \
  && cd MACH2023 \
  && kim-api-collections-management install user SF__MO_000000000000_000
+RUN kim-api-collections-management install user SW_StillingerWeber_1985_Si__MO_405512056662_005
+RUN kimitems install ForcesNumerDeriv__VC_710586816390_003
+RUN kimitems install InversionSymmetry__VC_021653764022_002
+
+# install corner
+RUN echo openkim | sudo -S pip install corner ptemcee emcee
 
 ENV SHELL=/bin/bash
 WORKDIR /home/openkim/MACH2023/notebooks
+RUN cp -r /home/openkim/MACH2023/SF__MO_000000000000_000 /home/openkim/models
